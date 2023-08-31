@@ -23,6 +23,7 @@ public class BaseTest {
     @BeforeAll
     public static void init() {
         WebDriverManager.chromedriver().setup();
+        System.out.println("initialized");
     }
 
 
@@ -40,7 +41,9 @@ public class BaseTest {
     }
 
     public void startDefaultMode() {
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--remote-allow-origins=*");
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
         logger.info("Драйвер поднят");
     }
@@ -48,18 +51,21 @@ public class BaseTest {
     public void startHeadlessMode() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");
+        options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
         logger.info("Драйвер поднят в режиме headless");
+
     }
 
     public void startKioskMode() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("kiosk");
+        options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
         logger.info("Драйвер поднят  в режиме kiosk");
+
+
     }
 }
-
-
